@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const instance = axios.create({
-    baseURL:'postgresql://postgres:djWhRM6xB8LtrnwRWsbE@containers-us-west-101.railway.app:5877/railway',
+    baseURL:'http://localhost:5877',
     withCredentials:true,
 
 })
