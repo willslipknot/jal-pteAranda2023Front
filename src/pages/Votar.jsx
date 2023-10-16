@@ -172,8 +172,8 @@ function Votar() {
                                     ))}
                                 </select>
                             </div>
-                            <input type='text' value={candidato ? candidato.label : ''}  {...register("candidato", { required: true })}></input>
-                            <input type='text' value={candidato ? candidato.value : ''} {...register("id_candidato", { required: true })}></input>
+                            <input type='text' value={candidato.label}  {...register("candidato", { required: true })}></input>
+                            <input type='text' value={candidato.value} {...register("id_candidato", { required: true })}></input>
                             <input type='text' value={"1"} hidden {...register("voto", { required: true })}></input>
                             <div className="form-group-votar">
                                 <label htmlFor="comentario" className='titulos'>Comentario sobre el candidato:</label>
