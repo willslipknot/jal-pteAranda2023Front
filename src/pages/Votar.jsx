@@ -94,18 +94,17 @@ function Votar() {
     };
 
     const handleCandidatoChange1 = (e) => {
-        const selectedCandidato = e.target.value;
-        setCandidatoSel(selectedCandidato);
+        const selectedCandidatoValue = e.target.value;
+        setCandidatoSel(selectedCandidatoValue);
 
-        const selectedCandidatoObj = candidatoSel.find(candidatoItem => candidatoItem.value === selectedCandidato);
-
+        const selectedCandidatoObj = candidato.find(candidatoItem => candidatoItem.value === selectedCandidatoValue);
 
         if (selectedCandidatoObj) {
             setValue("candidato", selectedCandidatoObj.label);
-            setValue("id", selectedCandidatoObj.value);
+            setValue("id_candidato", selectedCandidatoObj.value);
         } else {
             setValue("candidato", "");
-            setValue("id", "");
+            setValue("id_candidato", "");
         }
     };
 
@@ -163,17 +162,17 @@ function Votar() {
                             </div>
                             <div>
                                 <label className='titulos'>Candidato:</label>
-                                <select className="dropdown-candidato-votar" onChange={handleCandidatoChange1} value={candidato ? candidato.value : ''}>
+                                <select className="dropdown-candidato-votar" onChange={handleCandidatoChange1} value={candidatoSel}>
                                     <option value="">Seleccione un candidato</option>
-                                    {candidato && candidato.map((candidatoItem, index) => (
+                                    {candidato.map((candidatoItem, index) => (
                                         <option key={candidatoItem.value} value={candidatoItem.value}>
                                             {candidatoItem.label}
                                         </option>
                                     ))}
                                 </select>
                             </div>
-                            <input type='text' value={candidatoSel ? candidato.label : ''}  {...register("candidato", { required: true })}></input>
-                            <input type='text' value={candidatoSel ? candidato.value : ''} {...register("id_candidato", { required: true })}></input>
+                            <input type='text' value={candidatoSel ? candidatoSel.label : ''} {...register("candidato", { required: true })}></input>
+                            <input type='text' value={candidatoSel ? candidatoSel.value : ''} {...register("id_candidato", { required: true })}></input>
                             <input type='text' value={"1"} hidden {...register("voto", { required: true })}></input>
                             <div className="form-group-votar">
                                 <label htmlFor="comentario" className='titulos'>Comentario sobre el candidato:</label>
