@@ -172,7 +172,7 @@ function Votar() {
                                     ))}
                                 </select>
                             </div>
-                            <input type='text' value={candidato ? candidato.label : ''} hidden {...register("candidato", { required: true })}></input>
+                            <input type='text' value={selectedCandidatoObj.label} hidden {...register("candidato", { required: true })}></input>
                             <input type='text' value={candidato ? candidato.value : ''} hidden {...register("id_candidato", { required: true })}></input>
                             <input type='text' value={"1"} hidden {...register("voto", { required: true })}></input>
                             <div className="form-group-votar">
