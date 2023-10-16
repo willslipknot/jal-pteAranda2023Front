@@ -31,7 +31,7 @@ function Votar() {
         { label: 'Nuevo Liberalismo', value: 'Nuevo Liberalismo' },
         { label: 'Pacto Historico', value: 'Pacto Historico' },
         { label: 'Conservador - Colombia Justa Libres', value: 'Conservador - Colombia Justa Libres' },
-        { label: 'Voto en Blanco', value: 'Voto en Blanco' }
+        { label: 'Voto en Blanco', value: 'Voto en Blanco' }      
     ];
 
     const handleOpenModal = () => {
@@ -94,10 +94,11 @@ function Votar() {
     };
 
     const handleCandidatoChange1 = (e) => {
-        const selectedCandidatoValue = e.target.value;
-        setCandidatoSel(selectedCandidatoValue);
+        const selectedCandidato = e.target.value;
+        setCandidatoSel(selectedCandidato);
 
-        const selectedCandidatoObj = candidato.find(candidatoItem => candidatoItem.value === selectedCandidatoValue);
+        const selectedCandidatoObj = candidato.find(candidatoItem => candidatoItem.value === selectedCandidato);
+
 
         if (selectedCandidatoObj) {
             setValue("candidato", selectedCandidatoObj.label);
@@ -162,17 +163,17 @@ function Votar() {
                             </div>
                             <div>
                                 <label className='titulos'>Candidato:</label>
-                                <select className="dropdown-candidato-votar" onChange={handleCandidatoChange1} value={candidatoSel}>
+                                <select className="dropdown-candidato-votar" onChange={handleCandidatoChange1} value={candidato ? candidato.value : ''}>
                                     <option value="">Seleccione un candidato</option>
-                                    {candidato.map((candidatoItem, index) => (
+                                    {candidato && candidato.map((candidatoItem, index) => (
                                         <option key={candidatoItem.value} value={candidatoItem.value}>
                                             {candidatoItem.label}
                                         </option>
                                     ))}
                                 </select>
                             </div>
-                            <input type='text' value={candidatoSel ? candidatoSel.label : ''} {...register("candidato", { required: true })}></input>
-                            <input type='text' value={candidatoSel ? candidatoSel.value : ''} {...register("id_candidato", { required: true })}></input>
+                            <input type='text' value={candidato ? candidato.label : ''} hidden {...register("candidato", { required: true })}></input>
+                            <input type='text' value={candidato ? candidato.value : ''} hidden {...register("id_candidato", { required: true })}></input>
                             <input type='text' value={"1"} hidden {...register("voto", { required: true })}></input>
                             <div className="form-group-votar">
                                 <label htmlFor="comentario" className='titulos'>Comentario sobre el candidato:</label>
@@ -180,7 +181,7 @@ function Votar() {
                             </div>
 
                             <div className="estrellas">
-                                <label htmlFor="puntuacion" className='titulos'>Puntuacion:</label>
+                            <label htmlFor="puntuacion" className='titulos'>Puntuacion:</label>
                                 <p className="clasificacion">
                                     {[5, 4, 3, 2, 1].map((value) => (
                                         <React.Fragment key={value}>
