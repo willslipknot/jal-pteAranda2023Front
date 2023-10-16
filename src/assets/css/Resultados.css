@@ -1,0 +1,83 @@
+@font-face {
+  font-family: 'coolveticarg.otf';
+  src: url('../fonts/coolveticarg.otf');
+}
+
+.resultados-container {
+  display: flex;
+  justify-content: space-around;
+}
+
+.titulo {
+  text-align: center;
+  font-family: 'coolveticarg.otf';
+  position: relative;
+}
+
+.titulo2 {
+  text-align: left;
+  font-family: 'coolveticarg.otf';
+  position: relative;
+}
+
+.titulos2 {
+  text-align: center;
+}
+
+.titulos3 {
+  text-align: center;
+  font-family: 'coolveticarg.otf';
+}
+
+.tabla-container {
+  margin-right: 20px;
+  font-family: 'coolveticarg.otf';
+}
+
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  background-color: #f9f9f9;
+  font-family: 'coolveticarg.otf';
+}
+
+.tabla th,
+.tabla td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: center;
+  font-family: 'coolveticarg.otf';
+}
+
+.tabla th {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+.tabla tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.encabezado-amarillo {
+  background-color: yellow;
+}
+
+.encabezado-rojo {
+  background-color: red;
+}
+
+.boton {
+  background-color: black;
+  font-family: 'coolveticarg.otf';
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 18px;
+  margin: 10px 0;
+  cursor: pointer;
+
+}
