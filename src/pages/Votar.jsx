@@ -163,7 +163,7 @@ function Votar() {
                             </div>
                             <div>
                                 <label className='titulos'>Candidato:</label>
-                                <select className="dropdown-candidato-votar" onChange={handleCandidatoChange1} value={candidatoSel ? candidatoSel.value : ''}>
+                                <select className="dropdown-candidato-votar" onChange={handleCandidatoChange1} value={candidato ? candidato.value : ''}>
                                     <option value="">Seleccione un candidato</option>
                                     {candidato && candidato.map((candidatoItem, index) => (
                                         <option key={candidatoItem.value} value={candidatoItem.value}>
@@ -172,8 +172,8 @@ function Votar() {
                                     ))}
                                 </select>
                             </div>
-                            <input type='text' value={candidatoSel ? candidatoSel.label : ''}  {...register("candidato", { required: true })}></input>
-                            <input type='text' value={candidatoSel ? candidatoSel.value : ''} {...register("id_candidato", { required: true })}></input>
+                            <input type='text' value={candidatoSel ? candidato.label : ''}  {...register("candidato", { required: true })}></input>
+                            <input type='text' value={candidatoSel ? candidato.value : ''} {...register("id_candidato", { required: true })}></input>
                             <input type='text' value={"1"} hidden {...register("voto", { required: true })}></input>
                             <div className="form-group-votar">
                                 <label htmlFor="comentario" className='titulos'>Comentario sobre el candidato:</label>
