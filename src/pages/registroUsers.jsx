@@ -23,7 +23,7 @@ function RegistroUsers() {
   })
 
   return (
-    <div>
+    <div className='todo'><br></br>
       <h1 className='nombre'>Intencion de voto Puente Aranda Bogota 2023</h1>
     <div className="form-container-Home">
       <div className="encabezado-container" >
@@ -37,7 +37,7 @@ function RegistroUsers() {
           <input type="text" {...register('nombre', { required: true })} />
           {
             errors.nombre && (
-              <p className='text-red-500'>
+              <p className='mensajes'>
                 Nombre es requerido
               </p>
             )
@@ -48,7 +48,7 @@ function RegistroUsers() {
           <input type="text" {...register('correo', { required: true })} />
           {
             errors.correo && (
-              <p className='text-red-500'>
+              <p className='mensajes'>
                 Correo es requerido
               </p>
             )
@@ -62,7 +62,7 @@ function RegistroUsers() {
         </div>
         {
           userErrors.map((error, i) => (
-            <div className='bg-red-500 p-0 text-white' key={i}>
+            <div className='mensajes' key={i}>
               {error}
             </div>
           ))

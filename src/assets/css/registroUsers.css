@@ -3,98 +3,149 @@
   src: url('../fonts/coolveticarg.otf');
 }
 
+/* Estilos base para dispositivos grandes (computadoras) */
 .form-container-Home {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 80vh;
-    background-color: white;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 86vh; /* Ajustar altura de la pantalla completa */
+  background-color:  #2e3c51;
+  color: #ffffff; 
+}
 
-  .nombre{
-    font-family: 'coolveticarg.otf';
-    font-size:40px;
-    display: flex;
-    justify-content: center;
-    align-items: baseline;
-    height: 1px;
-    background-color: white;
-  }
+.todo {
+  background-color: #2e3c51;
+  width: 100%;
+  height: 100%;
+}
 
+.nombre {
+  font-family: 'coolveticarg.otf';
+  font-size: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  height: 1px;
+  color: white; /* Azul principal para el texto */
+}
 
 .encabezado-container {
-    position: absolute;
-    justify-content: center;
-    justify-content: space-around;
-    align-items: center;
-    top: 0;
-    left: 0;
-    display: flex;
-    height: 100%;
-    width: 100%;
+  position: absolute;
+  justify-content: center;
+  justify-content: space-around;
+  align-items: center;
+  top: 0;
+  left: 0;
+  display: flex;
+  height: 100%;
+  width: 100%;
 }
 
 .encabezado-container img {
-    width: 300px;
-    height: 300px;
-    padding: 10%;
-    filter: brightness(30%);
-    transition: .7s ease;
+  width: 300px;
+  height: 300px;
+  padding: 10%;
+  filter: brightness(30%);
+  transition: 0.7s ease;
 }
-
 
 .formulario-Home {
-    position: relative;
-    font-family: 'coolveticarg.otf';
-    font-size:18px;
-    background-color: #2b333e;
-    color: white;
-    border: 1px solid white;
-    padding: 2.5rem;
-    border-radius: 0.375rem;
-    box-shadow: 0px 0px 10px 0px white;
-    width: 300px; 
-    text-align: center;
-    z-index: 1; 
+  position: relative;
+  font-family: 'coolveticarg.otf';
+  font-size: 18px;
+  background-color: #3498db; /* Azul principal para el fondo del formulario */
+  color: #ffffff; /* Texto blanco */
+  border: 1px solid white;
+  padding: 1.5rem;
+  border-radius: 0.375rem;
+  box-shadow: 0px 0px 10px 0px white;
+  width: 300px;
+  text-align: center;
+  z-index: 1;
 }
-  
-  .form-group-Home {
-    font-family: 'coolveticarg.otf';
-    font-size:18px;
-    margin-bottom: 20px;
+
+.form-group-Home {
+  font-family: 'coolveticarg.otf';
+  font-size: 18px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  text-align: left;
+  color: #ffffff; /* Texto blanco para las etiquetas */
+}
+
+input[type="text"] {
+  width: calc(100% - 20px);
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ffffff; /* Bordes de las entradas de usuario */
+  border-radius: 5px;
+  background-color: white; /* Fondo de las entradas de usuario */
+  color: black; /* Texto de las entradas de usuario */
+  margin-top: 5px;
+}
+
+button {
+  background-color: #ffffff; /* Fondo de los botones */
+  color: #000000; /* Texto de los botones */
+  border: none;
+  padding: 10px 20px;
+  font-size: 18px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: 'coolveticarg.otf';
+  font-size: 18px;
+}
+
+button:hover {
+  background-color: #f2f2f2; /* Cambio de color al pasar el mouse */
+}
+
+.mensajes {
+  background-color: #2e3c51; /* Color de fondo para mensajes de error */
+  color: #e74c3c; /* Texto en mensajes de error */
+}
+
+/* Estilos para dispositivos más pequeños (tabletas y móviles) */
+@media (max-width: 768px) {
+  .nombre {
+    font-size: 36px;
     text-align: center;
   }
-  
-  label {
-    display: block;
-    margin-bottom: 5px;
-    text-align: left;
+
+  .todo {
+    width: 100vw;
+    height: 100vh;
+    max-width: 100%;
+    max-height: 100%;
   }
-  
+
+  .encabezado-container img {
+    display: none;
+  }
+
+  .formulario-Home {
+    font-size: 16px; 
+    width: 100%; 
+    max-width:400px; 
+    margin: 0 auto; 
+  }
+
   input[type="text"] {
-    width: calc(100% - 20px);
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid white;
-    border-radius: 5px;
-    background-color: black;
-    color: white;
-    margin-top: 5px;
+    font-size: 14px;
   }
-  
-  button {
-    background-color: white;
-    color: black;
-    border: none;
-    padding: 10px 20px;
-    font-size: 18px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-family: 'coolveticarg.otf';
-    font-size:18px;
+
+  .encabezado-container img {
+    width: 100%; 
+    max-width: 300px;
   }
-  
-  button:hover {
-    background-color: #f2f2f2;
+
+  .mensajes {
+    font-size: 14px; 
+    color: #e74c3c;
   }
-  
+}
