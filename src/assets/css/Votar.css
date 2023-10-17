@@ -5,9 +5,9 @@
 
 .btn-buscar,
 .btn-votar {
-    background-color: #FFD700;
+    background-color: #3498db; /* Cambiar el color de fondo */
     font-family: 'coolveticarg.otf';
-    color: black;
+    color: white; /* Cambiar el color del texto */
     border: none;
     padding: 10px 20px;
     text-align: center;
@@ -18,15 +18,16 @@
     cursor: pointer;
 }
 
-.btn-buscar {
-    margin: 2px 0;
+.btn-buscar:hover,
+.btn-votar:hover {
+    background-color: #2980b9; /* Cambiar el color de fondo al pasar el mouse */
 }
 
 .btn-filtrar,
 .button-v {
-    background-color: red;
+    background-color: #e74c3c; /* Cambiar el color de fondo */
     font-family: 'coolveticarg.otf';
-    color: white;
+    color: white; /* Cambiar el color del texto */
     border: none;
     padding: 10px 20px;
     text-align: center;
@@ -39,158 +40,42 @@
 
 .form-container-buscar {
     display: flex;
-    flex-direction: row;
-    width: 40%;
-    height: auto;
+    flex-direction: column; /* Cambiar a disposición en columna */
+    width: 80%; /* Ajustar el ancho */
     margin-bottom: 20px;
-    justify-content: space-around;
+    align-items: center; /* Centrar elementos horizontalmente */
 }
 
 .dropdown-partido,
 .dropdown-candidato,
-.formulario {
-    width: 100%;
-    padding: 8px;
-    margin: 1px 0;
-    font-size: 16px;
-    font-family: 'coolveticarg.otf';
-}
-
-.dropdown-partido-votar,
-.dropdown-candidato-votar{
-    width: 100%;
-    padding: 8px;
-    margin: 1px 0;
-    font-size: 16px;
-    font-family: 'coolveticarg.otf';
-    background-color: black;
-    color: white;
-}
-
+.formulario,
 .area {
-    width: 95%;
-    padding: 8px;
-    margin: 1px 0;
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin: 10px 0;
     font-size: 16px;
     font-family: 'coolveticarg.otf';
-    background-color: black;
-    color: white;
+    border: 1px solid #ccc; /* Añadir un borde */
+    border-radius: 5px; /* Añadir bordes redondeados */
+    box-sizing: border-box;
 }
 
 .titulos {
     font-size: 18px;
     font-family: 'coolveticarg.otf';
+    margin-bottom: 5px; /* Espaciado inferior para los títulos */
 }
 
 .imagen_p1 {
-    width: 60%;
+    width: 80%; /* Ajustar el tamaño de la imagen */
+    max-width: 400px; /* Establecer un ancho máximo */
 }
 
 .contenedor-imagen-votar {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-bottom: 20px; /* Espaciado inferior */
 }
 
-.modal-buscar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    z-index: 1000;
-    text-align: center;
-}
-
-.formulario {
-    width: calc(100% - 20px);
-    padding: 10px;
-    font-size: 16px;
-    border-radius: 5px;
-    box-sizing: border-box;
-    margin-bottom: 10px;
-    text-align: center;
-}
-
-.modal-votar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    z-index: 1000;
-    text-align: center;
-}
-
-.actividad-form {
-    background-color: white;
-    color: black;
-    padding: 10px;
-    border-radius: 10px;
-    max-width: 400px;
-    width: 100%;
-    text-align: center;
-}
-
-.form-group {
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-.form-group label {
-    font-weight: bold;
-    font-size: 16px;
-    display: block;
-    margin-bottom: 10px;
-    text-align: center;
-}
-
-.form-container1 {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    width: 40%;
-    margin-bottom: 20px;
-}
-
-.estrellas {
-    display: flex;
-    flex-direction: row;
-}
-
-.clasificacion {
-    flex-direction: row;
-    display: flex;
-    direction: rtl;
-    unicode-bidi: bidi-override;
-    justify-content: center;
-}
-
-.clasificacion input[type="radio"] {
-    display: none;   
-}
-
-.clasificacion label {
-    font-size: 35px;
-    color: gray;
-    cursor: pointer;
-    text-align: center;
-    width: 50px;
-}
-
-.clasificacion label:hover,
-.clasificacion label:hover~label {
-    color: #ffca28;
-}
-
-.clasificacion input[type="radio"]:checked~label {
-    color: #ffca28;
-}
+/* Resto de tus estilos aquí... */
