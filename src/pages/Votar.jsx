@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useCandidatos } from '../context/candidatoContext.jsx';
 import '../assets/css/Votar.css';
-import image1 from '../assets/images/tarjeton.jpeg';
+import image1 from '../assets/images/tarjeton.jpg';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../context/user.context.jsx';
@@ -17,9 +17,35 @@ function Votar() {
     const { logout } = useUser();
     const [modalOpen, setModalOpen] = useState(false);
     const [modalOpen1, setModalOpen1] = useState(false);
+    const [showPage, setShowPage] = useState(true);
+    const [countdown, setCountdown] = useState('');
     const [rating, setRating] = useState(0);
     const [candidatoInfo, setCandidatoInfo] = useState({ nombre: '', partido: '', posicion: '' });
     const navigate = useNavigate();
+    const targetDate = new Date('2023-10-27T23:59:59').getTime();
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            const now = new Date().getTime();
+            if (now > targetDate) {
+                setShowPage(false);
+            } else {
+                const distance = targetDate - now;
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                setCountdown(`${days}D ${hours}H ${minutes}M ${seconds}S`);
+            }
+        }, 1000);
+    
+        // Limpiar el intervalo cuando el componente se desmonta para evitar pérdida de memoria
+        return () => clearInterval(interval);
+    }, []);
+
+    if (!showPage) {
+        return navigate('/Home')
+    }
 
     const partidos = [
         { label: 'Alianza Verde', value: 'Alianza Verde' },
@@ -43,13 +69,17 @@ function Votar() {
     };
 
     const handleOpenModal1 = () => {
-        setModalOpen(true);
+        setModalOpen1(true);
     };
 
     const handleCloseModal1 = () => {
-        setModalOpen(false);
+        setModalOpen1(false);
     };
 
+    const Mvotar = () => {
+        setModalOpen(false);
+        setModalOpen1(true)
+    };
     const handlePartidoChange = async (e) => {
         const selectedPartido = e.target.value;
         setPartido(selectedPartido);
@@ -145,13 +175,16 @@ function Votar() {
 
     return (
         <div className='contenedor-centrado'>
+            <h1 className='nombre'>Intencion de voto JAL Puente Aranda Bogota 2023</h1><br></br><br></br><br></br>
+            <h1 className='reloj'>Cuenta regresiva: {countdown}</h1><br></br>
+            <div className='botones'>
             <button className="btn-votar" onClick={handleVotarClick}>Votar</button>
             {modalOpen1 && (
                 <div className="modal-votar" onClick={handleCloseModal1}>
                     <div className="actividad-form" onClick={(e) => e.stopPropagation()}>
                         <form onSubmit={onSubmit} className='votar'>
                             <div>
-                                <label className='titulos'>Partido:</label>
+                                <label className='titulos'>Partido</label>
                                 <select {...register("partido", { required: true })} className="dropdown-partido-votar" onChange={handlePartidoChange1} value={partido}>
                                     <option value="">Seleccione un partido</option>
                                     {partidos.map((partido, i) => (
@@ -162,7 +195,7 @@ function Votar() {
                                 </select>
                             </div>
                             <div>
-                                <label className='titulos'>Candidato:</label>
+                                <label className='titulos'>Candidato</label>
                                 <select className="dropdown-candidato-votar" onChange={handleCandidatoChange1} value={candidato ? candidato.value : ''}>
                                     <option value="">Seleccione un candidato</option>
                                     {candidato && candidato.map((candidatoItem, index) => (
@@ -176,12 +209,12 @@ function Votar() {
                             <input type='text' value={candidato ? candidato.value : ''} hidden {...register("id_candidato", { required: true })}></input>
                             <input type='text' value={"1"} hidden {...register("voto", { required: true })}></input>
                             <div className="form-group-votar">
-                                <label htmlFor="comentario" className='titulos'>Comentario sobre el candidato:</label>
+                                <label htmlFor="comentario" className='titulos'>Comentario sobre el candidato</label>
                                 <textarea className="area" rows="3" {...register("comentario", { required: true })} ></textarea>
                             </div>
 
                             <div className="estrellas">
-                            <label htmlFor="puntuacion" className='titulos'>Puntuacion:</label>
+                            <label htmlFor="puntuacion" className='titulos'>Puntuacion</label>
                                 <p className="clasificacion">
                                     {[5, 4, 3, 2, 1].map((value) => (
                                         <React.Fragment key={value}>
@@ -210,9 +243,9 @@ function Votar() {
             )}
             <button className="btn-filtrar" onClick={handleFiltrarClick}>Filtrar</button>
             {mostrarFormulario && (
+                
                 <div className="form-container-buscar">
                     <div>
-                        <label className='titulos'>Partido:</label>
                         <select className="dropdown-partido" onChange={handlePartidoChange} value={partido}>
                             <option value="">Seleccione un partido</option>
                             {partidos.map((partido, i) => (
@@ -224,7 +257,6 @@ function Votar() {
                     </div><br></br><br></br><br></br><br></br><br></br>
                     {partido && (
                         <div>
-                            <label className='titulos'>Candidato:</label>
                             <select className="dropdown-candidato" onChange={handleCandidatoChange} value={candidato ? candidato.value : ''}>
                                 <option value="">Seleccione un candidato</option>
                                 {candidato && candidato.map((candidatoItem, index) => (
@@ -255,10 +287,14 @@ function Votar() {
                                 <label htmlFor="posicion" className='titulos'>Posicion</label>
                                 <input type="text" className='formulario' value={candidatoInfo.posicion} readOnly />
                             </div>
+                            <div className="form-group">
+                                <button type="button" onClick={Mvotar}>Votar</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             )}
+            </div>
             <div className='contenedor-imagen-votar'>
                 <img className='imagen_p1' src={image1} alt=" " />
             </div>

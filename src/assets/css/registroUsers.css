@@ -3,18 +3,17 @@
   src: url('../fonts/coolveticarg.otf');
 }
 
-/* Estilos base para dispositivos grandes (computadoras) */
+
 .form-container-Home {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 86vh; /* Ajustar altura de la pantalla completa */
-  background-color:  #2e3c51;
+  height: 86vh; 
   color: #ffffff; 
 }
 
 .todo {
-  background-color: #2e3c51;
+  background-color:  rgba(0, 0, 0, 0.7);;
   width: 100%;
   height: 100%;
 }
@@ -26,7 +25,7 @@
   justify-content: center;
   align-items: baseline;
   height: 1px;
-  color: white; /* Azul principal para el texto */
+  color: white;
 }
 
 .encabezado-container {
@@ -53,8 +52,8 @@
   position: relative;
   font-family: 'coolveticarg.otf';
   font-size: 18px;
-  background-color: #3498db; /* Azul principal para el fondo del formulario */
-  color: #ffffff; /* Texto blanco */
+  background-color: #3498db;
+  color: #ffffff;
   border: 1px solid white;
   padding: 1.5rem;
   border-radius: 0.375rem;
@@ -75,14 +74,14 @@ label {
   display: block;
   margin-bottom: 5px;
   text-align: left;
-  color: #ffffff; /* Texto blanco para las etiquetas */
+  color: #ffffff;
 }
 
 input[type="text"] {
   width: calc(100% - 20px);
   padding: 10px;
   font-size: 16px;
-  border: 1px solid #ffffff; /* Bordes de las entradas de usuario */
+  border: 1px solid #ffffff; 
   border-radius: 5px;
   background-color: white; /* Fondo de las entradas de usuario */
   color: black; /* Texto de las entradas de usuario */

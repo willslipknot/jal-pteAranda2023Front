@@ -3,11 +3,21 @@
     src: url('../fonts/coolveticarg.otf');
 }
 
-.btn-buscar,
-.btn-votar {
-    background-color: #3498db; /* Cambiar el color de fondo */
+.nombre{
+    color: #3498db;
+    text-align: center;
+}
+
+.botones{
+    display: flex;
+    text-align: center;
+    justify-content: space-around;
+}
+
+.btn-buscar{
+    background-color: #3498db;
     font-family: 'coolveticarg.otf';
-    color: white; /* Cambiar el color del texto */
+    color: black;
     border: none;
     padding: 10px 20px;
     text-align: center;
@@ -18,16 +28,43 @@
     cursor: pointer;
 }
 
-.btn-buscar:hover,
-.btn-votar:hover {
-    background-color: #2980b9; /* Cambiar el color de fondo al pasar el mouse */
+.btn-votar {
+    background-color: #3498db;
+    font-family: 'coolveticarg.otf';
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 25px;
+    margin: 10px 0;
+    cursor: pointer;
 }
 
-.btn-filtrar,
-.button-v {
-    background-color: #e74c3c; /* Cambiar el color de fondo */
+.btn-buscar {
+    margin: 2px 0;
+}
+
+.btn-filtrar
+{
+    background-color: #3498db;
     font-family: 'coolveticarg.otf';
-    color: white; /* Cambiar el color del texto */
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 25px;
+    margin: 10px 0;
+    cursor: pointer;
+}
+
+.button-v {
+    background-color: white;
+    font-family: 'coolveticarg.otf';
+    color: black;
     border: none;
     padding: 10px 20px;
     text-align: center;
@@ -40,42 +77,227 @@
 
 .form-container-buscar {
     display: flex;
-    flex-direction: column; /* Cambiar a disposición en columna */
-    width: 80%; /* Ajustar el ancho */
-    margin-bottom: 20px;
-    align-items: center; /* Centrar elementos horizontalmente */
+    flex-direction: row;
+    width: 40%;
+    height: 50px;
+    margin-bottom: 2px;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    align-items: flex-end;
 }
 
 .dropdown-partido,
 .dropdown-candidato,
-.formulario,
-.area {
-    width: calc(100% - 20px);
-    padding: 10px;
-    margin: 10px 0;
+.formulario {
+    width: 100%;
+    padding: 8px;
+    margin: 1px 0;
     font-size: 16px;
     font-family: 'coolveticarg.otf';
-    border: 1px solid #ccc; /* Añadir un borde */
-    border-radius: 5px; /* Añadir bordes redondeados */
-    box-sizing: border-box;
+}
+
+.dropdown-partido-votar,
+.dropdown-candidato-votar{
+    width: 100%;
+    padding: 8px;
+    margin: 1px 0;
+    font-size: 16px;
+    font-family: 'coolveticarg.otf';
+    background-color: white;
+    color: black;
+}
+
+.area {
+    width: 95%;
+    padding: 8px;
+    margin: 1px 0;
+    font-size: 16px;
+    font-family: 'coolveticarg.otf';
+    background-color: white;
+    color: black;
 }
 
 .titulos {
     font-size: 18px;
     font-family: 'coolveticarg.otf';
-    margin-bottom: 5px; /* Espaciado inferior para los títulos */
+    text-align: center;
+}
+
+.reloj{
+    font-size: 20px;
+    font-family: 'coolveticarg.otf';
+    text-align: left;
+    color: black;
 }
 
 .imagen_p1 {
-    width: 80%; /* Ajustar el tamaño de la imagen */
-    max-width: 400px; /* Establecer un ancho máximo */
+    width: 68%;
+    justify-content: center;
 }
 
 .contenedor-imagen-votar {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 20px; /* Espaciado inferior */
 }
 
-/* Resto de tus estilos aquí... */
+.actividad-form {
+    background-color: #3498db;
+    color: black;
+    padding: 10px;
+    border-radius: 10px;
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+}
+.modal-buscar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    text-align: center;
+}
+
+.formulario {
+    width: calc(100% - 20px);
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.modal-votar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    text-align: center;
+}
+
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.form-group label {
+    font-weight: bold;
+    font-size: 16px;
+    display: block;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.form-container1 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 40%;
+    margin-bottom: 20px;
+}
+
+.estrellas {
+    display: flex;
+    flex-direction: row;
+}
+
+.clasificacion {
+    flex-direction: row;
+    display: flex;
+    direction: rtl;
+    unicode-bidi: bidi-override;
+    justify-content: center;
+}
+
+.clasificacion input[type="radio"] {
+    display: none;   
+}
+
+.clasificacion label {
+    font-size: 35px;
+    color: gray;
+    cursor: pointer;
+    text-align: center;
+    width: 50px;
+}
+
+.clasificacion label:hover,
+.clasificacion label:hover~label {
+    color: #ffca28;
+}
+
+.clasificacion input[type="radio"]:checked~label {
+    color: #ffca28;
+}
+
+@media (max-width: 768px) {
+    .botones {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .form-container-buscar {
+        width: 90%;
+        margin: 0 auto;
+    }
+
+    .dropdown-partido,
+    .dropdown-candidato,
+    .formulario,
+    .area {
+        width: 100%;
+    }
+
+    .imagen_p1 {
+        width: 90%;
+    }
+
+    .modal-buscar,
+    .modal-votar {
+        padding: 10px;
+    }
+
+    .actividad-form {
+        max-width: 90%;
+    }
+
+    .form-container1 {
+        width: 90%;
+        margin: 0 auto;
+    }
+}
+
+
+@media (min-width: 769px) {
+    .botones {
+        justify-content: space-around;
+    }
+
+    .form-container-buscar {
+        width: 40%;
+        margin: 0;
+    }
+
+    .imagen_p1 {
+        width: 68%;
+    }
+
+    .form-container1 {
+        width: 40%;
+        margin: 0;
+    }
+}
