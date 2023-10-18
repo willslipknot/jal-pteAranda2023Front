@@ -176,7 +176,6 @@ function Votar() {
 
     const onSubmit = handleSubmit(async (data) => {
         console.log("Datos del formulario:", data);
-        updateUser(userId, data.candidato)
         createVoto(data);
         navigate('/Resultados');
         setModalOpen1(false);

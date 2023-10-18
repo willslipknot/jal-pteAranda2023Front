@@ -47,6 +47,7 @@ function RegistroUsers() {
       data.ip = localIP;
       try {
         const response = await signup(data);
+        console.log('Respuesta del servidor:', response); // Agrega esta línea para verificar la respuesta
         const userId = response.data.userId; // Asegúrate de que la estructura de la respuesta sea correcta
         if (userId) {
           localStorage.setItem('userId', userId);
@@ -60,6 +61,7 @@ function RegistroUsers() {
       }
     }
 });
+
 
 
   return (
