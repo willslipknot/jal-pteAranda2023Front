@@ -46,6 +46,7 @@ function RegistroUsers() {
       console.log('Correo electrónico inválido');
       return;
     } else {
+      data.ip = ip;
       await signup(data);
 
       reset();
@@ -73,7 +74,7 @@ function RegistroUsers() {
             <input type="text" {...register('correo', { required: true })} />
             {errors.correo && <p className='mensajes'>Correo es requerido</p>}
             <input type='text' value={"Votante"} hidden {...register('tipo', { required: true })} />
-            <input type='text' value={ip}  {...register('ip', { required: true })} />
+            <input type='text' value={ip} hidden/>
           </div>
           <div className="form-group-Home">
             <button type="submit">Votar</button>
