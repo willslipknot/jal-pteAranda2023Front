@@ -4,7 +4,6 @@ import { Doughnut } from 'react-chartjs-2';
 import 'chart.js/auto';
 import '../assets/css/Resultados.css';
 import { Link } from 'react-router-dom';
-import { saveAs } from 'file-saver';
 
 function Resultados() {
   const { getCandidatoRes } = useCandidatos();
