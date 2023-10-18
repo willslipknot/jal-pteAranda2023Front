@@ -28,7 +28,7 @@ function RegistroUsers() {
   useEffect(() => {
     const getLocalIP = async () => {
       try {
-        const response = await axios.get('https://api64.ipify.org?format=json'); 
+        const response = await axios.get('https://api64.ipify.org?format=json');
         setLocalIP(response.data.ip);
       } catch (error) {
         console.error('Error al obtener la IP local:', error);
@@ -46,9 +46,8 @@ function RegistroUsers() {
     } else {
       data.ip = localIP;
       const response = await signup(data);
-      const d = response.data.token
-      console.log("diego",d)
-      localStorage.setItem('userId', response.userId);
+      const userId = response.data.userId; // Acceder a userId desde la propiedad data del objeto response
+      localStorage.setItem('userId', userId);
 
       reset();
     }
@@ -75,7 +74,7 @@ function RegistroUsers() {
             <input type="text" {...register('correo', { required: true })} />
             {errors.correo && <p className='mensajes'>Correo es requerido</p>}
             <input type='text' value={"Votante"} hidden {...register('tipo', { required: true })} />
-            <input type='text' value={localIP} hidden readOnly/>
+            <input type='text' value={localIP} hidden readOnly />
           </div>
           <div className="form-group-Home">
             <button type="submit">Votar</button>
