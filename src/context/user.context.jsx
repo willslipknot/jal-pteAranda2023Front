@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { registerRequest, loginRequest, verifyTokenRequest, getUserRequest } from '../api/user.js';
+import { registerRequest, loginRequest, verifyTokenRequest, getUserRequest, updateUserRequest } from '../api/user.js';
 import Cookies from 'js-cookie';
 
 
@@ -64,6 +64,25 @@ export const UserProvider = ({ children }) => {
         }
     }
 
+    const updateUser= async (id, user) => {
+        try {
+            const res = await updateUserRequest(id, user);
+            if (res.status === 200) {
+                setActs(prevUser => {
+                    return prevUser.map(prevUser=> {
+                        if (prevUser.id === id) {
+                            return { ...prevUser, ...user};
+                        }
+                        return prevUser;
+                    });
+                });
+            }
+            console.log(res);
+        } catch (error) {
+            console.error('Error al actualizar la condición:', error);
+        }
+    };
+
     useEffect(() => {
         async function checkLogin() {
             const cookies = Cookies.get();
@@ -106,6 +125,7 @@ export const UserProvider = ({ children }) => {
                 user,
                 loading,
                 getUser,
+                updateUser,
             }}
         > {children}
         </UserContext.Provider>

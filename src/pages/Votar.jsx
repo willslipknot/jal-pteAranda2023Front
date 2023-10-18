@@ -5,6 +5,9 @@ import image1 from '../assets/images/tarjeton.jpg';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../context/user.context.jsx';
+import jwtDecode from 'jwt-decode';
+import Cookies from 'js-cookie';
+import axios from 'axios';
 
 
 function Votar() {
@@ -14,7 +17,7 @@ function Votar() {
     const [candidatoSel, setCandidatoSel] = useState('');
     const [candidato, setCandidato] = useState(null);
     const { getCandidato, getCand, createVoto } = useCandidatos();
-    const { logout } = useUser();
+    const { logout, updateUser } = useUser();
     const [modalOpen, setModalOpen] = useState(false);
     const [modalOpen1, setModalOpen1] = useState(false);
     const [showPage, setShowPage] = useState(true);
@@ -28,7 +31,7 @@ function Votar() {
         const sessionTimeout = setTimeout(() => {
             logout();
             navigate('/Resultados');
-        }, 10 * 60 * 1000); 
+        }, 10 * 60 * 1000);
 
         return () => clearTimeout(sessionTimeout);
     }, []);
@@ -47,7 +50,7 @@ function Votar() {
                 setCountdown(`${days}D ${hours}H ${minutes}M ${seconds}S`);
             }
         }, 1000);
-    
+
         return () => clearInterval(interval);
     }, []);
 
@@ -65,8 +68,9 @@ function Votar() {
         { label: 'Nuevo Liberalismo', value: 'Nuevo Liberalismo' },
         { label: 'Pacto Historico', value: 'Pacto Historico' },
         { label: 'Conservador - Colombia Justa Libres', value: 'Conservador - Colombia Justa Libres' },
-        { label: 'Voto en Blanco', value: 'Voto en Blanco' }      
+        { label: 'Voto en Blanco', value: 'Voto en Blanco' }
     ];
+
 
     const handleOpenModal = () => {
         setModalOpen(true);
@@ -166,6 +170,10 @@ function Votar() {
         }
     };
 
+    const token = Cookies.get('token');
+    const decodedToken = jwtDecode(token); 
+    const userId = decodedToken.id;
+
     const handleStarClick = (value) => {
         setRating(value);
         setValue("estrellas", value);
@@ -173,12 +181,15 @@ function Votar() {
 
     const onSubmit = handleSubmit(async (data) => {
         console.log("Datos del formulario:", data);
+        updateUser(userId, data.candidato)
         createVoto(data);
         navigate('/Resultados');
         setModalOpen1(false);
         logout();
 
     });
+    
+
 
 
     return (
@@ -186,25 +197,86 @@ function Votar() {
             <h1 className='nombre'>Intencion de voto JAL Puente Aranda Bogota 2023</h1><br></br><br></br><br></br>
             <h1 className='reloj'>Cuenta regresiva: {countdown}</h1><br></br>
             <div className='botones'>
-            <button className="btn-votar" onClick={handleVotarClick}>Votar</button>
-            {modalOpen1 && (
-                <div className="modal-votar" onClick={handleCloseModal1}>
-                    <div className="actividad-form" onClick={(e) => e.stopPropagation()}>
-                        <form onSubmit={onSubmit} className='votar'>
+                <button className="btn-votar" onClick={handleVotarClick}>Votar</button>
+                {modalOpen1 && (
+                    <div className="modal-votar" onClick={handleCloseModal1}>
+                        <div className="actividad-form" onClick={(e) => e.stopPropagation()}>
+                            <form onSubmit={onSubmit} className='votar'>
+                                <div>
+                                    <label className='titulos'>Partido</label>
+                                    <select {...register("partido", { required: true })} className="dropdown-partido-votar" onChange={handlePartidoChange1} value={partido}>
+                                        <option value="">Seleccione un partido</option>
+                                        {partidos.map((partido, i) => (
+                                            <option key={partido.label} value={partido.value}>
+                                                {partido.label}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+                                <div>
+                                    <label className='titulos'>Candidato</label>
+                                    <select className="dropdown-candidato-votar" onChange={handleCandidatoChange1} value={candidato ? candidato.value : ''}>
+                                        <option value="">Seleccione un candidato</option>
+                                        {candidato && candidato.map((candidatoItem, index) => (
+                                            <option key={candidatoItem.value} value={candidatoItem.value}>
+                                                {candidatoItem.label}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+                                <input type='text' value={candidato ? candidato.label : ''} hidden {...register("candidato", { required: true })}></input>
+                                <input type='text' value={candidato ? candidato.value : ''} hidden {...register("id_candidato", { required: true })}></input>
+                                <input type='text' value={"1"} hidden {...register("voto", { required: true })}></input>
+                                <div className="form-group-votar">
+                                    <label htmlFor="comentario" className='titulos'>Comentario sobre el candidato</label>
+                                    <textarea className="area" rows="3" {...register("comentario", { required: true })} ></textarea>
+                                </div>
+
+                                <div className="estrellas">
+                                    <label htmlFor="puntuacion" className='titulos'>Puntuacion</label>
+                                    <p className="clasificacion">
+                                        {[5, 4, 3, 2, 1].map((value) => (
+                                            <React.Fragment key={value}>
+                                                <input
+                                                    type="radio"
+                                                    id={`radio${value}`}
+                                                    className="estrella"
+                                                    name="rating"
+                                                    value={value}
+                                                    onClick={() => handleStarClick(value)}
+                                                />
+                                                <label htmlFor={`radio${value}`}>★</label>
+                                            </React.Fragment>
+                                        ))}
+                                    </p>
+                                </div>
+
+
+                                <div className="form-group-votar">
+                                    <button className='button-v' type='submit'>Votar</button>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                )}
+                <button className="btn-filtrar" onClick={handleFiltrarClick}>Filtrar</button>
+                {mostrarFormulario && (
+
+                    <div className="form-container-buscar">
+                        <div>
+                            <select className="dropdown-partido" onChange={handlePartidoChange} value={partido}>
+                                <option value="">Seleccione un partido</option>
+                                {partidos.map((partido, i) => (
+                                    <option key={partido.label} value={partido.value}>
+                                        {partido.label}
+                                    </option>
+                                ))}
+                            </select>
+                        </div><br></br><br></br><br></br><br></br><br></br>
+                        {partido && (
                             <div>
-                                <label className='titulos'>Partido</label>
-                                <select {...register("partido", { required: true })} className="dropdown-partido-votar" onChange={handlePartidoChange1} value={partido}>
-                                    <option value="">Seleccione un partido</option>
-                                    {partidos.map((partido, i) => (
-                                        <option key={partido.label} value={partido.value}>
-                                            {partido.label}
-                                        </option>
-                                    ))}
-                                </select>
-                            </div>
-                            <div>
-                                <label className='titulos'>Candidato</label>
-                                <select className="dropdown-candidato-votar" onChange={handleCandidatoChange1} value={candidato ? candidato.value : ''}>
+                                <select className="dropdown-candidato" onChange={handleCandidatoChange} value={candidato ? candidato.value : ''}>
                                     <option value="">Seleccione un candidato</option>
                                     {candidato && candidato.map((candidatoItem, index) => (
                                         <option key={candidatoItem.value} value={candidatoItem.value}>
@@ -213,95 +285,34 @@ function Votar() {
                                     ))}
                                 </select>
                             </div>
-                            <input type='text' value={candidato ? candidato.label : ''} hidden {...register("candidato", { required: true })}></input>
-                            <input type='text' value={candidato ? candidato.value : ''} hidden {...register("id_candidato", { required: true })}></input>
-                            <input type='text' value={"1"} hidden {...register("voto", { required: true })}></input>
-                            <div className="form-group-votar">
-                                <label htmlFor="comentario" className='titulos'>Comentario sobre el candidato</label>
-                                <textarea className="area" rows="3" {...register("comentario", { required: true })} ></textarea>
-                            </div>
-
-                            <div className="estrellas">
-                            <label htmlFor="puntuacion" className='titulos'>Puntuacion</label>
-                                <p className="clasificacion">
-                                    {[5, 4, 3, 2, 1].map((value) => (
-                                        <React.Fragment key={value}>
-                                            <input
-                                                type="radio"
-                                                id={`radio${value}`}
-                                                className="estrella"
-                                                name="rating"
-                                                value={value}
-                                                onClick={() => handleStarClick(value)}
-                                            />
-                                            <label htmlFor={`radio${value}`}>★</label>
-                                        </React.Fragment>
-                                    ))}
-                                </p>
-                            </div>
-
-
-                            <div className="form-group-votar">
-                                <button className='button-v' type='submit'>Votar</button>
-                            </div>
-
-                        </form>
+                        )}
+                        <br></br>&nbsp;
+                        <button className="btn-buscar" type="button" onClick={handleBuscarClick}>Buscar</button>
                     </div>
-                </div>
-            )}
-            <button className="btn-filtrar" onClick={handleFiltrarClick}>Filtrar</button>
-            {mostrarFormulario && (
-                
-                <div className="form-container-buscar">
-                    <div>
-                        <select className="dropdown-partido" onChange={handlePartidoChange} value={partido}>
-                            <option value="">Seleccione un partido</option>
-                            {partidos.map((partido, i) => (
-                                <option key={partido.label} value={partido.value}>
-                                    {partido.label}
-                                </option>
-                            ))}
-                        </select>
-                    </div><br></br><br></br><br></br><br></br><br></br>
-                    {partido && (
-                        <div>
-                            <select className="dropdown-candidato" onChange={handleCandidatoChange} value={candidato ? candidato.value : ''}>
-                                <option value="">Seleccione un candidato</option>
-                                {candidato && candidato.map((candidatoItem, index) => (
-                                    <option key={candidatoItem.value} value={candidatoItem.value}>
-                                        {candidatoItem.label}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
-                    )}
-                    <br></br>&nbsp;
-                    <button className="btn-buscar" type="button" onClick={handleBuscarClick}>Buscar</button>
-                </div>
-            )}
-            {modalOpen && (
-                <div className="modal-buscar" onClick={handleCloseModal}>
-                    <div className="actividad-form" onClick={(e) => e.stopPropagation()}>
-                        <div className='actividad'>
-                            <div className="form-group">
-                                <label htmlFor="nombre" className='titulos'>Nombre</label>
-                                <input type="text" className='formulario' value={candidatoInfo.nombre} readOnly />
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="partido" className='titulos'>Partido</label>
-                                <input type="text" className='formulario' value={candidatoInfo.partido} readOnly />
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="posicion" className='titulos'>Posicion</label>
-                                <input type="text" className='formulario' value={candidatoInfo.posicion} readOnly />
-                            </div>
-                            <div className="form-group">
-                                <button type="button" onClick={Mvotar}>Votar</button>
+                )}
+                {modalOpen && (
+                    <div className="modal-buscar" onClick={handleCloseModal}>
+                        <div className="actividad-form" onClick={(e) => e.stopPropagation()}>
+                            <div className='actividad'>
+                                <div className="form-group">
+                                    <label htmlFor="nombre" className='titulos'>Nombre</label>
+                                    <input type="text" className='formulario' value={candidatoInfo.nombre} readOnly />
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="partido" className='titulos'>Partido</label>
+                                    <input type="text" className='formulario' value={candidatoInfo.partido} readOnly />
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="posicion" className='titulos'>Posicion</label>
+                                    <input type="text" className='formulario' value={candidatoInfo.posicion} readOnly />
+                                </div>
+                                <div className="form-group">
+                                    <button type="button" onClick={Mvotar}>Votar</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            )}
+                )}
             </div>
             <div className='contenedor-imagen-votar'>
                 <img className='imagen_p1' src={image1} alt=" " />
