@@ -26,14 +26,19 @@ function RegistroUsers() {
     return regex.test(email);
   };
 
+  
   useEffect(() => {
-    axios.get('https://api.ipify.org?format=json')
-      .then(response => {
+    const getPublicIP = async () => {
+      try {
+        const response = await axios.get('https://api.ipify.org?format=json');
         setIP(response.data.ip);
-      })
-      .catch(error => {
+      } catch (error) {
         console.error('Error al obtener la IP pública:', error);
-      });
+      }
+    };
+
+    // Llama a la función para obtener la IP pública al cargar el componente
+    getPublicIP();
   }, []);
 
   const onSubmit = handleSubmit(async (data) => {
