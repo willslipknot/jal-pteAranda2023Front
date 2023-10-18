@@ -6,8 +6,6 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../context/user.context.jsx';
 
-
-
 function Votar() {
     const [mostrarFormulario, setMostrarFormulario] = useState(false);
     const { register, handleSubmit, setValue } = useForm();
