@@ -170,6 +170,7 @@ function Votar() {
     };
 
     const token = Cookies.get('token');
+    console.log(token)
     const decodedToken = jwtDecode(token); 
     const userId = decodedToken.id;
 
