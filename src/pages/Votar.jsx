@@ -5,8 +5,7 @@ import image1 from '../assets/images/tarjeton.jpg';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../context/user.context.jsx';
-import jwtDecode from 'jwt-decode';
-import Cookies from 'js-cookie';
+
 
 
 function Votar() {
