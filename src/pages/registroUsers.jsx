@@ -80,7 +80,9 @@ function RegistroUsers() {
             <br></br>
             <br></br>
             <Link to="/Resultados"> <button type="button">Resultados</button> </Link>
-            <Link to="/loginAdmin"> <button type="button">Admin</button> </Link>
+            {
+              //<Link to="/loginAdmin"> <button type="button">Admin</button> </Link>
+            }
           </div>
           {userErrors.map((error, i) => (
             <div className='mensajes' key={i}>
