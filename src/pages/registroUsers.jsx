@@ -18,12 +18,24 @@ function RegistroUsers() {
 
   }, [isAuthenticated, ]);
 
+  const validateEmail = (email) => {
+    
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+  };
+
 
   const onSubmit = handleSubmit(async (data) => {
     console.log('Datos del formulario:', data);
-    await signup(data);
+    if (!validateEmail(data.correo)) {
+      console.log('Correo electrónico inválido');
+      return;
+    }else{
+      await signup(data);
+  
+      reset();
+    }
     
-    reset();
   });
 
   return (
