@@ -28,7 +28,7 @@ function RegistroUsers() {
   useEffect(() => {
     const getLocalIP = async () => {
       try {
-        const response = await axios.get('https://api64.ipify.org?format=json');
+        const response = await axios.get('https://api64.ipify.org?format=json'); 
         setLocalIP(response.data.ip);
       } catch (error) {
         console.error('Error al obtener la IP local:', error);
@@ -45,27 +45,12 @@ function RegistroUsers() {
       return;
     } else {
       data.ip = localIP;
-      try {
-        const response = await signup(data);
-        const userId = response.data.userId; // Asegúrate de que response.data.userId exista en la respuesta
-        
-        if (userId) {
-          localStorage.setItem('userId', userId);
-          console.log("Usuario registrado con el ID:", userId);
-        } else {
-          console.error("Error al obtener el ID del usuario desde la respuesta del servidor.");
-          // Puedes manejar el error de alguna otra manera, por ejemplo, mostrando un mensaje al usuario.
-        }
-  
-        reset();
-      } catch (error) {
-        console.error("Error al registrar usuario:", error);
-        // Puedes manejar el error de alguna otra manera, por ejemplo, mostrando un mensaje al usuario.
-      }
+      await signup(data);
+
+      reset();
     }
+
   });
-
-
 
   return (
     <div className='todo'>
@@ -87,7 +72,7 @@ function RegistroUsers() {
             <input type="text" {...register('correo', { required: true })} />
             {errors.correo && <p className='mensajes'>Correo es requerido</p>}
             <input type='text' value={"Votante"} hidden {...register('tipo', { required: true })} />
-            <input type='text' value={localIP} hidden readOnly />
+            <input type='text' value={localIP} hidden readOnly/>
           </div>
           <div className="form-group-Home">
             <button type="submit">Votar</button>

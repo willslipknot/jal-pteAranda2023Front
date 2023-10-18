@@ -23,15 +23,15 @@ export const UserProvider = ({ children }) => {
 
     const signup = async (user) => {
         try {
-            const res = await registerRequest(user);
-            console.log(res.data);
-            setIsAuthenticated(true)
-            setUser(res.data);
-
+          const res = await registerRequest(user);
+          console.log(res.data);
+          setIsAuthenticated(true);
+          setUser(res.data);
+          localStorage.setItem('userId', res.data.userId); 
         } catch (error) {
-            setErrors(error.response.data);
+          setErrors(error.response.data);
         }
-    };
+      };
 
     const logout = (() => {
         Cookies.remove("token");
