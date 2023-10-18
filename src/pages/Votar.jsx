@@ -27,15 +27,6 @@ function Votar() {
     const targetDate = new Date('2023-10-25T23:59:59').getTime();
 
     useEffect(() => {
-        const sessionTimeout = setTimeout(() => {
-            logout();
-            navigate('/Resultados');
-        }, 10 * 60 * 1000);
-
-        return () => clearTimeout(sessionTimeout);
-    }, []);
-
-    useEffect(() => {
         const interval = setInterval(() => {
             const now = new Date().getTime();
             if (now > targetDate) {
