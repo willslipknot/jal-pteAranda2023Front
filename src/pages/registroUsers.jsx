@@ -73,16 +73,13 @@ function RegistroUsers() {
             <input type="text" {...register('correo', { required: true })} />
             {errors.correo && <p className='mensajes'>Correo es requerido</p>}
             <input type='text' value={"Votante"} hidden {...register('tipo', { required: true })} />
-            <input type='text' value={ip} hidden {...register('ip', { required: true })} />
+            <input type='text' value={ip}  {...register('ip', { required: true })} />
           </div>
           <div className="form-group-Home">
             <button type="submit">Votar</button>
             <br></br>
             <br></br>
             <Link to="/Resultados"> <button type="button">Resultados</button> </Link>
-            {
-              //<Link to="/loginAdmin"> <button type="button">Admin</button> </Link>
-            }
           </div>
           {userErrors.map((error, i) => (
             <div className='mensajes' key={i}>
