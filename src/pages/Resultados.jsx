@@ -4,6 +4,7 @@ import { Doughnut } from 'react-chartjs-2';
 import 'chart.js/auto';
 import '../assets/css/Resultados.css';
 import { Link } from 'react-router-dom';
+import { saveAs } from 'file-saver';
 
 function Resultados() {
   const { getCandidatoRes } = useCandidatos();
@@ -58,33 +59,54 @@ function Resultados() {
     datasets: [{
       data: registrosPartido.map(registro => ((registro.repeticiones / totalRegistros) * 100)),
       backgroundColor: [
-        'red',
         'green',
         'blue',
         'yellow',
+        'red',
         'pink',
-        'gray'
+        'orange',
+        'purple',
+        'Salmon',
+        'gray',
+
       ],
     }],
   };
 
+  const colores = [
+    'green',
+    'blue',
+    'yellow',
+    'red',
+    'pink',
+    'orange',
+    'purple',
+    'salmon',
+    'gray',
+
+  ];
+
+
+  function generarPaletaDeColores(registros) {
+    const paleta = [];
+    for (let i = 0; i < registros.length; i++) {
+
+      paleta.push(colores[i % colores.length]);
+    }
+    return paleta;
+  }
+
   const dataForChart1 = {
     datasets: [{
       data: registros.map(registro => ((registro.repeticiones / totalRegistros) * 100)),
-      backgroundColor: [
-        'red',
-        'green',
-        'blue',
-        'yellow',
-        'pink',
-      ],
+      backgroundColor: generarPaletaDeColores(registros),
     }],
     labels: registros.map(registro => registro.candidato),
   };
 
   return (
     <div>
-      <div>
+      <div className='titulosT'>
         <h1 className='titulo'>Resultados JAL Puente Aranda</h1>
         <h2 className='titulo2'>Total de Votos: {totalRegistros}</h2>
         <Link to="/"> <button type="button" className='boton'>Votar</button> </Link>
@@ -111,8 +133,8 @@ function Resultados() {
         </div>
 
         <div className="grafico-container">
-        <h2 className='titulos3'>Resultados - Candidato (%)</h2>
-        <Doughnut data={dataForChart1} />
+          <h2 className='titulos3'>Resultados - Candidato (%)</h2>
+          <Doughnut data={dataForChart1} />
         </div>
 
         <div className="tabla-container">
@@ -136,11 +158,11 @@ function Resultados() {
         </div>
 
         <div className="grafico-container">
-        <h2 className='titulos3'>Resultados - Partidos (%)</h2>
-        <Doughnut data={dataForChart} />
+          <h2 className='titulos3'>Resultados - Partidos (%)</h2>
+          <Doughnut data={dataForChart} />
+        </div>
       </div>
-      </div>
-      </div>
+    </div>
   );
 }
 

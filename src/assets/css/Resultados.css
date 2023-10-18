@@ -12,12 +12,14 @@
   text-align: center;
   font-family: 'coolveticarg.otf';
   position: relative;
+  color: #3498db;
 }
 
 .titulo2 {
   text-align: left;
   font-family: 'coolveticarg.otf';
   position: relative;
+  color: #3498db;
 }
 
 .titulos2 {
@@ -60,15 +62,15 @@
 }
 
 .encabezado-amarillo {
-  background-color: yellow;
+  background-color: rgb(87, 161, 235);
 }
 
 .encabezado-rojo {
-  background-color: red;
+  background-color: rgba(97, 221, 255, 0.671);
 }
 
 .boton {
-  background-color: black;
+  background-color: #3498db;
   font-family: 'coolveticarg.otf';
   color: white;
   border: none;
@@ -76,8 +78,106 @@
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 18px;
+  font-size: 25px;
   margin: 10px 0;
   cursor: pointer;
+}
 
+.titulosT{
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .resultados-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .tabla-container {
+    margin-right: 0;
+  }
+
+  .boton {
+    font-size: 18px;
+    padding: 8px 16px;
+  }
+}
+
+.titulo {
+  text-align: center;
+  font-family: 'coolveticarg.otf';
+  position: relative;
+  color: #3498db;
+}
+
+.titulo2 {
+  text-align: left;
+  font-family: 'coolveticarg.otf';
+  position: relative;
+  color: #3498db;
+}
+
+.titulos2 {
+  text-align: center;
+}
+
+.titulos3 {
+  text-align: center;
+  font-family: 'coolveticarg.otf';
+}
+
+.tabla-container {
+  margin-right: 20px;
+  font-family: 'coolveticarg.otf';
+}
+
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  background-color: #f9f9f9;
+  font-family: 'coolveticarg.otf';
+}
+
+.tabla th,
+.tabla td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: center;
+  font-family: 'coolveticarg.otf';
+}
+
+.tabla th {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+.tabla tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.encabezado-amarillo {
+  background-color: rgb(87, 161, 235);
+}
+
+.encabezado-rojo {
+  background-color: rgba(97, 221, 255, 0.671);
+}
+
+.boton {
+  background-color: #3498db;
+  font-family: 'coolveticarg.otf';
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 25px;
+  margin: 10px 0;
+  cursor: pointer;
+}
+
+.titulosT {
+  text-align: center;
 }

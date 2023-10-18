@@ -22,7 +22,16 @@ function Votar() {
     const [rating, setRating] = useState(0);
     const [candidatoInfo, setCandidatoInfo] = useState({ nombre: '', partido: '', posicion: '' });
     const navigate = useNavigate();
-    const targetDate = new Date('2023-10-27T23:59:59').getTime();
+    const targetDate = new Date('2023-10-25T23:59:59').getTime();
+
+    useEffect(() => {
+        const sessionTimeout = setTimeout(() => {
+            logout();
+            navigate('/Resultados');
+        }, 10 * 60 * 1000); 
+
+        return () => clearTimeout(sessionTimeout);
+    }, []);
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -39,7 +48,6 @@ function Votar() {
             }
         }, 1000);
     
-        // Limpiar el intervalo cuando el componente se desmonta para evitar pérdida de memoria
         return () => clearInterval(interval);
     }, []);
 

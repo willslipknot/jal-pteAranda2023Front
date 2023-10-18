@@ -3,18 +3,25 @@
     src: url('../fonts/coolveticarg.otf');
 }
 
-.nombre{
+.nombre {
     color: #3498db;
     text-align: center;
+    font-family: 'coolveticarg.otf';
+    font-size: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    height: 1px;
+
 }
 
-.botones{
+.botones {
     display: flex;
     text-align: center;
     justify-content: space-around;
 }
 
-.btn-buscar{
+.btn-buscar {
     background-color: #3498db;
     font-family: 'coolveticarg.otf';
     color: black;
@@ -46,8 +53,7 @@
     margin: 2px 0;
 }
 
-.btn-filtrar
-{
+.btn-filtrar {
     background-color: #3498db;
     font-family: 'coolveticarg.otf';
     color: black;
@@ -97,7 +103,7 @@
 }
 
 .dropdown-partido-votar,
-.dropdown-candidato-votar{
+.dropdown-candidato-votar {
     width: 100%;
     padding: 8px;
     margin: 1px 0;
@@ -123,7 +129,7 @@
     text-align: center;
 }
 
-.reloj{
+.reloj {
     font-size: 20px;
     font-family: 'coolveticarg.otf';
     text-align: left;
@@ -150,6 +156,7 @@
     width: 100%;
     text-align: center;
 }
+
 .modal-buscar {
     display: flex;
     justify-content: center;
@@ -224,7 +231,7 @@
 }
 
 .clasificacion input[type="radio"] {
-    display: none;   
+    display: none;
 }
 
 .clasificacion label {
