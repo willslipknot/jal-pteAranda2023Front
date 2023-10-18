@@ -47,14 +47,20 @@ function RegistroUsers() {
       data.ip = localIP;
       try {
         const response = await signup(data);
-        const userId = response.data.userId;
-        localStorage.setItem('userId', userId);
+        const userId = response.data.userId; // Asegúrate de que la estructura de la respuesta sea correcta
+        if (userId) {
+          localStorage.setItem('userId', userId);
+          console.log('ID del usuario guardado en localStorage:', userId);
+        } else {
+          console.error('ID del usuario no encontrado en la respuesta del servidor.');
+        }
         reset();
       } catch (error) {
         console.error('Error al registrar usuario:', error);
       }
     }
-  });
+});
+
 
   return (
     <div className='todo'>
