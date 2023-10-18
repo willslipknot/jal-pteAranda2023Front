@@ -26,20 +26,18 @@ function RegistroUsers() {
     return regex.test(email);
   };
 
-  fetch('https://api.ipify.org?format=json')
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Error en la solicitud: ' + response.statusText);
-    }
-    return response.json();
-  })
-  .then(data => {
-    console.log('IP Pública:', data.ip);
-  })
-  .catch(error => {
-    console.error('Error al obtener la IP pública:', error);
-  });
+  useEffect(() => {
+    fetch('https://api.ipify.org?format=json')
+      .then(response => response.json())
+      .then(data => {
+        setIP(data.ip);
+      })
+      .catch(error => {
+        console.error('Error al obtener la IP pública:', error);
+      });
+  }, []);
 
+  
   const onSubmit = handleSubmit(async (data) => {
     console.log('Datos del formulario:', data);
     if (!validateEmail(data.correo)) {
