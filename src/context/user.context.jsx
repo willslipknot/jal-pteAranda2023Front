@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { registerRequest, loginRequest, verifyTokenRequest } from '../api/user.js';
+import { registerRequest, loginRequest, verifyTokenRequest, getUserRequest } from '../api/user.js';
 import Cookies from 'js-cookie';
 
 
@@ -54,6 +54,16 @@ export const UserProvider = ({ children }) => {
         }
     }
 
+    const getUser= async() => {
+        try {
+            const res =await getUserRequest();
+            return res.data
+
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
     useEffect(() => {
         async function checkLogin() {
             const cookies = Cookies.get();
@@ -94,7 +104,8 @@ export const UserProvider = ({ children }) => {
                 logout,
                 signin,
                 user,
-                loading
+                loading,
+                getUser,
             }}
         > {children}
         </UserContext.Provider>

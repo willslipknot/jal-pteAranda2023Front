@@ -12,10 +12,11 @@ import { Link } from 'react-router-dom';
 function admin() {
     const { getCandidatoRes } = useCandidatos();
     const [datos, setDatos] = useState([]);
+    const [datosUs, setDatosUs] = useState([]);
     const [registros, setRegistros] = useState([]);
     const [registrosPartido, setRegistrosPartido] = useState([]);
     const [totalRegistros, setTotalRegistros] = useState(0);
-    const { logout } = useUser();
+    const { logout, getUser } = useUser();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -26,6 +27,21 @@ function admin() {
 
         return () => clearTimeout(sessionTimeout);
     }, []);
+
+    const obtenerUsers = async () => {
+        const response = await getUser();
+        const data = response;
+
+        setDatosUs(data.map(datosUs => ({
+            Nombre: datosUs.nombre,
+            Correo: datosUs.correo,
+            Ip: datosUs.ip,
+            Tipo: datosUs.tipo,
+
+        })))
+
+
+    }
 
     const obtenerRegistros = async () => {
         const response = await getCandidatoRes();
@@ -70,35 +86,67 @@ function admin() {
 
     useEffect(() => {
         obtenerRegistros();
+        obtenerUsers();
     }, []);
 
     const descargarResultadosXLS = () => {
 
         const ws1 = XLSX.utils.json_to_sheet(datos);
         const ws2 = XLSX.utils.json_to_sheet(registros.concat(registrosPartido));
+        const ws3 = XLSX.utils.json_to_sheet(datosUs)
         const wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws1, 'Votos');
         XLSX.utils.book_append_sheet(wb, ws2, 'Total de votos');
+        XLSX.utils.book_append_sheet(wb, ws3, 'Usuarios');
         XLSX.writeFile(wb, 'resultados.xlsx');
 
     };
 
     const descargarResultadosPowerBI = () => {
-        const datosPowerBI = {
-            table1: datos,
-            table2: registros,
-            table3: registrosPartido
-        };
+        try {
+            const datosPowerBI = {
+                tables: [
+                    {
+                        name: "Votos",
+                        columns: Object.keys(datos[0]),
+                        rows: datos.map(dato => Object.values(dato))
+                    },
+                    {
+                        name: "TotalVotos",
+                        columns: Object.keys(registros[0]),
+                        rows: registros.map(registro => Object.values(registro))
+                    },
+                    {
+                        name: "VotosPorPartido",
+                        columns: Object.keys(registrosPartido[0]),
+                        rows: registrosPartido.map(registroPartido => Object.values(registroPartido))
+                    },
+                    {
+                        name: "Usuarios",
+                        columns: Object.keys(datosUs[0]),
+                        rows: datosUs.map(datoUs => Object.values(datoUs))
+                    }
+                ]
+            };
+    
+            const datosPowerBIJSON = JSON.stringify({ tables: datosPowerBI.tables });
+    
+            const blob = new Blob([datosPowerBIJSON], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+    
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'resultados.pbix';
+            link.click();
+    
+            URL.revokeObjectURL(url);
+        } catch (error) {
+            console.error(error);
+            alert('Error descargando archivo');
+        }
+    }
+    
 
-        const datosPowerBIJSON = JSON.stringify(datosPowerBI);
-        const blob = new Blob([datosPowerBIJSON], { type: 'application/json' });
-        const blobURL = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = blobURL;
-        a.download = 'resultados.pbix';
-        a.click();
-        URL.revokeObjectURL(blobURL);
-    };
 
     const handleLogout = () => {
         logout();

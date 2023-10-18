@@ -12,8 +12,7 @@ function RegistroUsers() {
   const { register, handleSubmit, reset, formState: { errors } } = useForm();
   const { signup, isAuthenticated, errors: userErrors } = useUser();
   const navigate = useNavigate();
-  const modalRef = useRef(null);
-  const [ip, setIP] = useState("");
+  const [localIP, setLocalIP] = useState("");
 
   useEffect(() => {
     if (isAuthenticated) navigate('/Votar');
@@ -26,18 +25,17 @@ function RegistroUsers() {
     return regex.test(email);
   };
 
-  
   useEffect(() => {
-    const getPublicIP = async () => {
+    const getLocalIP = async () => {
       try {
-        const response = await axios.get('https://api.ipify.org?format=json');
-        setIP(response.data.ip);
+        const response = await axios.get('https://api64.ipify.org?format=json'); 
+        setLocalIP(response.data.ip);
       } catch (error) {
-        console.error('Error al obtener la IP pública:', error);
+        console.error('Error al obtener la IP local:', error);
       }
     };
 
-    getPublicIP();
+    getLocalIP();
   }, []);
 
   const onSubmit = handleSubmit(async (data) => {
@@ -46,7 +44,7 @@ function RegistroUsers() {
       console.log('Correo electrónico inválido');
       return;
     } else {
-      data.ip = ip;
+      data.ip = localIP;
       await signup(data);
 
       reset();
@@ -74,7 +72,7 @@ function RegistroUsers() {
             <input type="text" {...register('correo', { required: true })} />
             {errors.correo && <p className='mensajes'>Correo es requerido</p>}
             <input type='text' value={"Votante"} hidden {...register('tipo', { required: true })} />
-            <input type='text' value={ip} hidden/>
+            <input type='text' value={localIP} hidden readOnly/>
           </div>
           <div className="form-group-Home">
             <button type="submit">Votar</button>
