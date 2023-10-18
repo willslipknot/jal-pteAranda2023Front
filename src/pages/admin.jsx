@@ -37,6 +37,7 @@ function admin() {
             Correo: datosUs.correo,
             Ip: datosUs.ip,
             Tipo: datosUs.tipo,
+            Voto_Candidato: datosUs.voto,
 
         })))
 
