@@ -7,6 +7,7 @@ import { UserProvider } from '../src/context/user.context.jsx';
 import { CandidatosProvider } from './context/candidatoContext.jsx';
 import { Routes, Route, BrowserRouter as Router } from 'react-router-dom';
 import ProtectedRoute from './ProtectedRoute.jsx';
+import Footer from './components/footer.jsx';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/admin" element={<Admin/>} />
           </Route>
         </Routes>
+        <Footer></Footer>
         </CandidatosProvider>
       </UserProvider>
     </Router>
