@@ -45,13 +45,15 @@ function RegistroUsers() {
       return;
     } else {
       data.ip = localIP;
-      const response = await signup(data);
-      const userId = response.data.userId; // Acceder a userId desde la propiedad data del objeto response
-      localStorage.setItem('userId', userId);
-
-      reset();
+      try {
+        const response = await signup(data);
+        const userId = response.data.userId;
+        localStorage.setItem('userId', userId);
+        reset();
+      } catch (error) {
+        console.error('Error al registrar usuario:', error);
+      }
     }
-
   });
 
   return (
