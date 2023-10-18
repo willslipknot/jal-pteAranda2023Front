@@ -6,36 +6,47 @@ import { useNavigate } from 'react-router-dom';
 import bogota from '../assets/images/logo_alcaldia.png';
 import colombia from '../assets/images/Colombia.png';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 function RegistroUsers() {
   const { register, handleSubmit, reset, formState: { errors } } = useForm();
-  const { signup, isAuthenticated, errors: userErrors} = useUser();
+  const { signup, isAuthenticated, errors: userErrors } = useUser();
   const navigate = useNavigate();
   const modalRef = useRef(null);
+  const [ip, setIP] = useState("");
 
   useEffect(() => {
     if (isAuthenticated) navigate('/Votar');
 
-  }, [isAuthenticated, ]);
+  }, [isAuthenticated,]);
 
   const validateEmail = (email) => {
-    
+
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return regex.test(email);
   };
 
+  fetch('https://api.ipify.org?format=json')
+    .then(response => response.json())
+    .then(data => {
+      console.log('IP Pública:', data.ip);
+      setIP(data.ip)
+    })
+    .catch(error => {
+      console.error('Error al obtener la IP pública:', error);
+    });
 
   const onSubmit = handleSubmit(async (data) => {
     console.log('Datos del formulario:', data);
     if (!validateEmail(data.correo)) {
       console.log('Correo electrónico inválido');
       return;
-    }else{
+    } else {
       await signup(data);
-  
+
       reset();
     }
-    
+
   });
 
   return (
@@ -58,6 +69,7 @@ function RegistroUsers() {
             <input type="text" {...register('correo', { required: true })} />
             {errors.correo && <p className='mensajes'>Correo es requerido</p>}
             <input type='text' value={"Votante"} hidden {...register('tipo', { required: true })} />
+            <input type='text' value={ip} hidden  {...register('ip', { required: true })} />
           </div>
           <div className="form-group-Home">
             <button type="submit">Votar</button>
