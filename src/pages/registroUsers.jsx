@@ -45,9 +45,9 @@ function RegistroUsers() {
       return;
     } else {
       data.ip = localIP;
-      await signup(data);
-      const { id } = response.data;
-      localStorage.setItem('userId', id);
+      const response = await signup(data);
+
+      localStorage.setItem('token', response.data.token);
 
       reset();
     }

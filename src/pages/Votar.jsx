@@ -27,6 +27,15 @@ function Votar() {
     const targetDate = new Date('2023-10-25T23:59:59').getTime();
 
     useEffect(() => {
+        const sessionTimeout = setTimeout(() => {
+            logout();
+            navigate('/Resultados');
+        }, 10 * 60 * 1000);
+
+        return () => clearTimeout(sessionTimeout);
+    }, []);
+
+    useEffect(() => {
         const interval = setInterval(() => {
             const now = new Date().getTime();
             if (now > targetDate) {
@@ -160,13 +169,10 @@ function Votar() {
         }
     };
 
-    const userId = localStorage.getItem('userId');
-
-    if (userId) {
-      console.log(userId)
-    } else {
-      // El usuario no está autenticado
-    }
+    const token = Cookies.get('token');
+    console.log(token)
+    const decodedToken = jwtDecode(token); 
+    const userId = decodedToken.id;
 
     const handleStarClick = (value) => {
         setRating(value);
