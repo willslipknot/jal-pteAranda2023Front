@@ -175,6 +175,8 @@ function Votar() {
     };
 
     const onSubmit = handleSubmit(async (data) => {
+
+        const userId = localStorage.getItem('userId');
         console.log("Datos del formulario:", data);
         updateUser(userId, data.candidato)
         createVoto(data);

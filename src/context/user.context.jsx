@@ -33,11 +33,12 @@ export const UserProvider = ({ children }) => {
         }
       };
 
-    const logout = (() => {
+      const logout = () => {
         Cookies.remove("token");
+        localStorage.removeItem('userId');
         setIsAuthenticated(false);
-        setUsers(null)
-    })
+        setUsers(null);
+      };
 
     const signin = async (user) => {
         try {
