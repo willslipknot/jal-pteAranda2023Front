@@ -46,7 +46,8 @@ function RegistroUsers() {
     } else {
       data.ip = localIP;
       const response = await signup(data);
-      console.log("d",response)
+      const d = response.data
+      console.log(d)
       localStorage.setItem('userId', response.userId);
 
       reset();
