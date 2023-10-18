@@ -7,7 +7,6 @@ import { useNavigate } from 'react-router-dom';
 import { useUser } from '../context/user.context.jsx';
 import jwtDecode from 'jwt-decode';
 import Cookies from 'js-cookie';
-import axios from 'axios';
 
 
 function Votar() {
