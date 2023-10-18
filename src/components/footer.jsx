@@ -6,9 +6,7 @@ class Footer extends Component {
         return (
 
   <footer className="footer">
-    <p>Chronus King Group</p>
-    <p>©Derechos Reservados</p>
-  
+    <p>Chronus King Group   ©Derechos Reservados</p><p></p>
   </footer>
 );
   
