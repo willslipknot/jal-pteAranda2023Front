@@ -65,24 +65,24 @@ export const UserProvider = ({ children }) => {
         }
     }
 
-    const updateUser= async (id, user) => {
+    const updateUser = async (id, updatedField) => {
         try {
-            const res = await updateUserRequest(id, user);
-            if (res.status === 200) {
-                setActs(prevUser => {
-                    return prevUser.map(prevUser=> {
-                        if (prevUser.id === id) {
-                            return { ...prevUser, ...user};
-                        }
-                        return prevUser;
-                    });
-                });
-            }
-            console.log(res);
+          const res = await updateUserRequest(id, { voto: updatedField });
+          if (res.status === 200) {
+            setActs((prevUsers) => {
+              return prevUsers.map((prevUser) => {
+                if (prevUser.id === id) {
+                  return { ...prevUser, voto: updatedField };
+                }
+                return prevUser;
+              });
+            });
+          }
+          console.log(res);
         } catch (error) {
-            console.error('Error al actualizar la condición:', error);
+          console.error('Error al actualizar el campo específico:', error);
         }
-    };
+      };
 
     useEffect(() => {
         async function checkLogin() {
