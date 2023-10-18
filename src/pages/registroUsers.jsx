@@ -27,17 +27,15 @@ function RegistroUsers() {
   };
 
   useEffect(() => {
-    fetch('https://api.ipify.org?format=json')
-      .then(response => response.json())
-      .then(data => {
-        setIP(data.ip);
+    axios.get('https://api.ipify.org?format=json')
+      .then(response => {
+        setIP(response.data.ip);
       })
       .catch(error => {
         console.error('Error al obtener la IP pública:', error);
       });
   }, []);
 
-  
   const onSubmit = handleSubmit(async (data) => {
     console.log('Datos del formulario:', data);
     if (!validateEmail(data.correo)) {
