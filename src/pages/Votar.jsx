@@ -160,10 +160,13 @@ function Votar() {
         }
     };
 
-    const token = Cookies.get('token');
-    console.log(token)
-    const decodedToken = jwtDecode(token); 
-    const userId = decodedToken.id;
+    const userId = localStorage.getItem('userId');
+
+    if (userId) {
+      console.log(userId)
+    } else {
+      // El usuario no está autenticado
+    }
 
     const handleStarClick = (value) => {
         setRating(value);
