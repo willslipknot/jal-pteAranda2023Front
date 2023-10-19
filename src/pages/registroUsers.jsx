@@ -42,6 +42,7 @@ function RegistroUsers() {
     console.log('Datos del formulario:', data);
     if (!validateEmail(data.correo)) {
       console.log('Correo electrónico inválido');
+      alert('Correo electrónico inválido');
       return;
     } else {
       data.ip = localIP;
@@ -82,6 +83,7 @@ function RegistroUsers() {
           </div>
           {userErrors.map((error, i) => (
             <div className='mensajes' key={i}>
+              alert({i});
               {error}
             </div>
           ))}
