@@ -10,37 +10,15 @@ function Resultados() {
   const [registros, setRegistros] = useState([]);
   const [registrosPartido, setRegistrosPartido] = useState([]);
   const [totalRegistros, setTotalRegistros] = useState(0);
-  const [loading, setLoading] = useState(true);
 
-useEffect(() => {
-  const obtenerRegistros = async () => {
-    try {
-      const response = await getCandidatoRes();
-      
-      // Verificar si response está definido y tiene datos
-      if (response && response.length) {
-        const data = response;
-        // Resto del código para procesar los datos...
-      } else {
-        console.error('Error: No se recibieron datos válidos del servidor.');
-      }
-    } catch (error) {
-      console.error('Error al obtener registros:', error);
-    }
-  };
-
-  obtenerRegistros();
-}, []);
-
-  
   useEffect(() => {
     const obtenerRegistros = async () => {
       try {
         const response = await getCandidatoRes();
-        if (response && response.length) {
         const data = response;
+        console.log(data);
         setTotalRegistros(data.length);
-          
+
         const contador = {};
         data.forEach(registro => {
           const candidato = registro.candidato;
@@ -52,6 +30,7 @@ useEffect(() => {
           const partido = registro1.partido;
           contador1[partido] = (contador1[partido] || 0) + 1;
         });
+
 
         const registrosOrdenados = Object.keys(contador).sort((a, b) => contador[b] - contador[a]);
         const registrosOrdenados1 = Object.keys(contador1).sort((a, b) => contador1[b] - contador1[a]);
@@ -66,24 +45,13 @@ useEffect(() => {
           repeticiones: contador1[partido]
         })));
 
-        
-
-        } else {
-        console.error('Error: No se recibieron datos válidos del servidor.');
-          setLoading(false);
-      }
       } catch (error) {
         console.error('Error al obtener registros:', error);
-        setLoading(false); 
       }
     };
 
     obtenerRegistros();
   }, []);
-
-  if (loading) {
-    return <p>Cargando resultados...</p>;
-  }
 
   const dataForChart = {
     labels: registrosPartido.map(registro => registro.partido),
@@ -99,25 +67,29 @@ useEffect(() => {
         'purple',
         'Salmon',
         'gray',
+
       ],
     }],
   };
 
-  function generarPaletaDeColores(registros) {
-    const colores = [
-      'green',
-      'blue',
-      'yellow',
-      'red',
-      'pink',
-      'orange',
-      'purple',
-      'salmon',
-      'gray',
-    ];
+  const colores = [
+    'green',
+    'blue',
+    'yellow',
+    'red',
+    'pink',
+    'orange',
+    'purple',
+    'salmon',
+    'gray',
 
+  ];
+
+
+  function generarPaletaDeColores(registros) {
     const paleta = [];
     for (let i = 0; i < registros.length; i++) {
+
       paleta.push(colores[i % colores.length]);
     }
     return paleta;
@@ -192,5 +164,6 @@ useEffect(() => {
     </div>
   );
 }
+
 
 export default Resultados;
