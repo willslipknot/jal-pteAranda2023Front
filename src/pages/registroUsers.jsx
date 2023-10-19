@@ -83,10 +83,13 @@ function RegistroUsers() {
           </div>
           {userErrors.map((error, i) => (
             <div className='mensajes' key={i}>
-              alert({i});
               {error}
             </div>
           ))}
+
+          userErrors.forEach((error, i) => {
+          alert(error); 
+          });
         </form>
       </div>
     </div>
