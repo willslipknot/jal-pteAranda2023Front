@@ -85,6 +85,15 @@ export const UserProvider = ({ children }) => {
       };
 
     useEffect(() => {
+        if (errors.length > 0) {
+            const timer = setTimeout(() => {
+                setErrors([])
+            }, 5000)
+            return () => clearTimeout(timer)
+        }
+    }, [errors])
+    
+    useEffect(() => {
         async function checkLogin() {
             const cookies = Cookies.get();
             if (!cookies.token) {
