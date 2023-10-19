@@ -12,13 +12,35 @@ function Resultados() {
   const [totalRegistros, setTotalRegistros] = useState(0);
   const [loading, setLoading] = useState(true);
 
+useEffect(() => {
+  const obtenerRegistros = async () => {
+    try {
+      const response = await getCandidatoRes();
+      
+      // Verificar si response está definido y tiene datos
+      if (response && response.length) {
+        const data = response;
+        // Resto del código para procesar los datos...
+      } else {
+        console.error('Error: No se recibieron datos válidos del servidor.');
+      }
+    } catch (error) {
+      console.error('Error al obtener registros:', error);
+    }
+  };
+
+  obtenerRegistros();
+}, []);
+
+  
   useEffect(() => {
     const obtenerRegistros = async () => {
       try {
         const response = await getCandidatoRes();
+        if (response && response.length) {
         const data = response;
         setTotalRegistros(data.length);
-
+          
         const contador = {};
         data.forEach(registro => {
           const candidato = registro.candidato;
@@ -44,10 +66,15 @@ function Resultados() {
           repeticiones: contador1[partido]
         })));
 
-        setLoading(false); // Marcar que los datos están listos
+        
+
+        } else {
+        console.error('Error: No se recibieron datos válidos del servidor.');
+          setLoading(false);
+      }
       } catch (error) {
         console.error('Error al obtener registros:', error);
-        setLoading(false); // Asegúrate de marcar que los datos están listos incluso en caso de error
+        setLoading(false); 
       }
     };
 
