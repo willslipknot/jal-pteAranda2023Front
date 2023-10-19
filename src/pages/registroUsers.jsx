@@ -25,6 +25,10 @@ function RegistroUsers() {
         return regex.test(email);
     };
 
+    {userErrors.map((error, i) => ( 
+        alert(error);
+     ))}
+
     useEffect(() => {
         const getLocalIP = async () => {
             try {
@@ -81,7 +85,7 @@ function RegistroUsers() {
                         <br></br>
                         <Link to="/Resultados"> <button type="button">Resultados</button> </Link>
                     </div>
-                    {userErrors.map((error, i) => (
+                    {userErrors.map((error, i) => (          
                         <div className='mensajes' key={i}>
                             {error}
                         </div>
