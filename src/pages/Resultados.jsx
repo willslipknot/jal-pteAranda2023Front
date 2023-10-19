@@ -10,13 +10,13 @@ function Resultados() {
   const [registros, setRegistros] = useState([]);
   const [registrosPartido, setRegistrosPartido] = useState([]);
   const [totalRegistros, setTotalRegistros] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const obtenerRegistros = async () => {
       try {
         const response = await getCandidatoRes();
         const data = response;
-        console.log(data);
         setTotalRegistros(data.length);
 
         const contador = {};
@@ -31,7 +31,6 @@ function Resultados() {
           contador1[partido] = (contador1[partido] || 0) + 1;
         });
 
-
         const registrosOrdenados = Object.keys(contador).sort((a, b) => contador[b] - contador[a]);
         const registrosOrdenados1 = Object.keys(contador1).sort((a, b) => contador1[b] - contador1[a]);
 
@@ -45,13 +44,19 @@ function Resultados() {
           repeticiones: contador1[partido]
         })));
 
+        setLoading(false); // Marcar que los datos están listos
       } catch (error) {
         console.error('Error al obtener registros:', error);
+        setLoading(false); // Asegúrate de marcar que los datos están listos incluso en caso de error
       }
     };
 
     obtenerRegistros();
   }, []);
+
+  if (loading) {
+    return <p>Cargando resultados...</p>;
+  }
 
   const dataForChart = {
     labels: registrosPartido.map(registro => registro.partido),
@@ -67,29 +72,25 @@ function Resultados() {
         'purple',
         'Salmon',
         'gray',
-
       ],
     }],
   };
 
-  const colores = [
-    'green',
-    'blue',
-    'yellow',
-    'red',
-    'pink',
-    'orange',
-    'purple',
-    'salmon',
-    'gray',
-
-  ];
-
-
   function generarPaletaDeColores(registros) {
+    const colores = [
+      'green',
+      'blue',
+      'yellow',
+      'red',
+      'pink',
+      'orange',
+      'purple',
+      'salmon',
+      'gray',
+    ];
+
     const paleta = [];
     for (let i = 0; i < registros.length; i++) {
-
       paleta.push(colores[i % colores.length]);
     }
     return paleta;
@@ -164,6 +165,5 @@ function Resultados() {
     </div>
   );
 }
-
 
 export default Resultados;
