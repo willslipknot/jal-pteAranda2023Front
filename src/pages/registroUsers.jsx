@@ -26,7 +26,7 @@ function RegistroUsers() {
     };
 
     {userErrors.map((error, i) => ( 
-        alert(error);
+        alert(error)
      ))}
 
     useEffect(() => {
