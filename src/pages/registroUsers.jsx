@@ -10,7 +10,7 @@ import axios from 'axios';
 
 function RegistroUsers() {
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
-    const { signup, isAuthenticated, errors: userErrors , setUserErrors} = useUser();
+    const { signup, isAuthenticated, errors: userErrors } = useUser();
     const navigate = useNavigate();
     const [localIP, setLocalIP] = useState("");
 
@@ -86,13 +86,6 @@ function RegistroUsers() {
                             {error}
                         </div>
                     ))}
-                    {userErrors.forEach((error, i) => {
-                        alert(error);
-                    })}
-
-                    {setTimeout(() => {
-                        setUserErrors([]); 
-                    }, 10000)}
 
                 </form>
             </div>
