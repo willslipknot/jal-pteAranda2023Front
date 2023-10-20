@@ -249,8 +249,8 @@ function Votar() {
                                             </React.Fragment>
                                         ))}
                                     </p>
+                                    {errors.estrellas && <p className="error-message">¡Por favor, selecciona una puntuación!</p>}
                                 </div>
-
 
                                 <div className="form-group-votar">
                                     {formError && <p style={{ color: 'red' }}>¡Por favor, completa todos los campos!</p>}
