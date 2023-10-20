@@ -15,6 +15,12 @@
 
 }
 
+.error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
 .botones {
     display: flex;
     text-align: center;
