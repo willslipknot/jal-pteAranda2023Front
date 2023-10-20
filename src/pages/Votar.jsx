@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { useUser } from '../context/user.context.jsx';
 
 function Votar() {
+    const [formError, setFormError] = useState(false);
     const [mostrarFormulario, setMostrarFormulario] = useState(false);
     const { register, handleSubmit, setValue, formState: { errors } } = useForm();
     const [partido, setPartido] = useState('');
@@ -172,14 +173,21 @@ function Votar() {
     };
 
     const onSubmit = handleSubmit(async (data) => {
-            const userId = localStorage.getItem('userId');
-            console.log("Datos del formulario:", data);
-            updateUser(userId, data.candidato);
-            createVoto(data);
-            navigate('/Resultados');
-            setModalOpen1(false);
-            logout();
-    });
+    // Verifica si los campos requeridos están llenos
+    if (!data.partido || !data.id_candidato || !data.comentario || !data.estrellas) {
+        setFormError(true); // Si algún campo está vacío, muestra el mensaje de error
+    } else {
+        // Si todos los campos están llenos, realiza la lógica del formulario aquí
+        const userId = localStorage.getItem('userId');
+        console.log("Datos del formulario:", data);
+        updateUser(userId, data.candidato);
+        createVoto(data);
+        navigate('/Resultados');
+        setModalOpen1(false);
+        logout();
+    }
+});
+
 
     return (
         <div className='contenedor-centrado'>
@@ -201,7 +209,6 @@ function Votar() {
                                             </option>
                                         ))}
                                     </select>
-                                    {errors.partido && <p className="error-message">{errors.partido.message}</p>}
                                 </div>
                                 <div>
                                     <label className='titulos'>Candidato</label>
@@ -221,7 +228,6 @@ function Votar() {
                                 <div className="form-group-votar">
                                     <label htmlFor="comentario" className='titulos'>Comentario sobre el candidato</label>
                                     <textarea className="area" rows="3" {...register("comentario", { required: true })} ></textarea>
-                                    {errors.comentario && <p className="error-message">{errors.comentario.message}</p>}
                                 </div>
 
                                 <div className="estrellas">
@@ -242,12 +248,11 @@ function Votar() {
                                             </React.Fragment>
                                         ))}
                                     </p>
-                                    {errors.estrellas && <p className="error-message">{errors.estrellas.message}</p>}
-
                                 </div>
 
 
                                 <div className="form-group-votar">
+                                    {formError && <p style={{ color: 'red' }}>¡Por favor, completa todos los campos!</p>}
                                     <button className='button-v' type='submit'>Votar</button>
                                 </div>
 
