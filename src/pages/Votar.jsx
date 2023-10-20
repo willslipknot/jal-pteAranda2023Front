@@ -242,6 +242,7 @@ function Votar() {
                                                     name="rating"
                                                     value={value}
                                                     onClick={() => handleStarClick(value)}
+                                                    checked={rating === value}
                                                     required 
                                                 />
                                                 <label htmlFor={`radio${value}`}>★</label>
