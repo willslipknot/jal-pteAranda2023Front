@@ -238,6 +238,7 @@ function Votar() {
                                                     name="rating"
                                                     value={value}
                                                     onClick={() => handleStarClick(value)}
+                                                    required 
                                                 />
                                                 <label htmlFor={`radio${value}`}>★</label>
                                             </React.Fragment>
