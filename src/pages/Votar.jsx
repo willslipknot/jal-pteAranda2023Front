@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { useUser } from '../context/user.context.jsx';
 
 function Votar() {
+    const [formError, setFormError] = useState(false);
     const [mostrarFormulario, setMostrarFormulario] = useState(false);
     const { register, handleSubmit, setValue } = useForm();
     const [partido, setPartido] = useState('');
@@ -172,17 +173,18 @@ function Votar() {
     };
 
     const onSubmit = handleSubmit(async (data) => {
-
-        const userId = localStorage.getItem('userId');
-        console.log("Datos del formulario:", data);
-        updateUser(userId, data.candidato)
-        createVoto(data);
-        navigate('/Resultados');
-        setModalOpen1(false);
-        logout();
-
+        if (!data.partido || !data.id_candidato || !data.comentario || !data.estrellas) {
+            setFormError(true);
+        } else {
+            const userId = localStorage.getItem('userId');
+            console.log("Datos del formulario:", data);
+            updateUser(userId, data.candidato);
+            createVoto(data);
+            navigate('/Resultados');
+            setModalOpen1(false);
+            logout();
+        }
     });
-    
 
 
 
@@ -302,6 +304,7 @@ function Votar() {
                                     <input type="text" className='formulario' value={candidatoInfo.posicion} readOnly />
                                 </div>
                                 <div className="form-group">
+                                    {formError && <p style={{ color: 'red' }}>¡Por favor, completa todos los campos!</p>}
                                     <button type="button" onClick={Mvotar}>Votar</button>
                                 </div>
                             </div>
