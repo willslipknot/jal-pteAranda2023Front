@@ -7,9 +7,8 @@ import { useNavigate } from 'react-router-dom';
 import { useUser } from '../context/user.context.jsx';
 
 function Votar() {
-    const [formError, setFormError] = useState(false);
     const [mostrarFormulario, setMostrarFormulario] = useState(false);
-    const { register, handleSubmit, setValue } = useForm();
+    const { register, handleSubmit, setValue, formState: { errors } } = useForm();
     const [partido, setPartido] = useState('');
     const [candidatoSel, setCandidatoSel] = useState('');
     const [candidato, setCandidato] = useState(null);
@@ -173,9 +172,6 @@ function Votar() {
     };
 
     const onSubmit = handleSubmit(async (data) => {
-        if (!data.partido || !data.id_candidato || !data.comentario || !data.estrellas) {
-            setFormError(true);
-        } else {
             const userId = localStorage.getItem('userId');
             console.log("Datos del formulario:", data);
             updateUser(userId, data.candidato);
@@ -183,10 +179,7 @@ function Votar() {
             navigate('/Resultados');
             setModalOpen1(false);
             logout();
-        }
     });
-
-
 
     return (
         <div className='contenedor-centrado'>
@@ -208,6 +201,7 @@ function Votar() {
                                             </option>
                                         ))}
                                     </select>
+                                    {errors.partido && <p className="error-message">{errors.partido.message}</p>}
                                 </div>
                                 <div>
                                     <label className='titulos'>Candidato</label>
@@ -219,6 +213,7 @@ function Votar() {
                                             </option>
                                         ))}
                                     </select>
+                                    {errors.candidato && <p className="error-message">{errors.candidato.message}</p>}
                                 </div>
                                 <input type='text' value={candidato ? candidato.label : ''} hidden {...register("candidato", { required: true })}></input>
                                 <input type='text' value={candidato ? candidato.value : ''} hidden {...register("id_candidato", { required: true })}></input>
@@ -226,6 +221,7 @@ function Votar() {
                                 <div className="form-group-votar">
                                     <label htmlFor="comentario" className='titulos'>Comentario sobre el candidato</label>
                                     <textarea className="area" rows="3" {...register("comentario", { required: true })} ></textarea>
+                                    {errors.comentario && <p className="error-message">{errors.comentario.message}</p>}
                                 </div>
 
                                 <div className="estrellas">
@@ -246,6 +242,8 @@ function Votar() {
                                             </React.Fragment>
                                         ))}
                                     </p>
+                                    {errors.estrellas && <p className="error-message">{errors.estrellas.message}</p>}
+
                                 </div>
 
 
@@ -304,7 +302,6 @@ function Votar() {
                                     <input type="text" className='formulario' value={candidatoInfo.posicion} readOnly />
                                 </div>
                                 <div className="form-group">
-                                    {formError && <p style={{ color: 'red' }}>¡Por favor, completa todos los campos!</p>}
                                     <button type="button" onClick={Mvotar}>Votar</button>
                                 </div>
                             </div>
